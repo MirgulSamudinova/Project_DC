@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Project_DC.Models.ScheduleTemplate>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Главная</h1>
+
+<p>
+    <a asp-action="Create">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Ф.И.О.
+            </th>
+            <th>
+                День недели
+            </th>
+            <th>
+                Время начала
+            </th>
+            <th>
+                Время конца
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Staffs.FullName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DaysOfWeek.DaysOfWeekName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.withTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ToTime)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.TmeplateId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.TmeplateId">Информация</a> |
+                <a asp-action="Delete" asp-route-id="@item.TmeplateId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

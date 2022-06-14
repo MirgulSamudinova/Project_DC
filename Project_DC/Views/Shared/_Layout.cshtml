@@ -1,0 +1,137 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - DentalClinic</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/navigation.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/teeth.css" asp-append-version="true" />
+    <style>
+    body {
+        font-family: "Lato", sans-serif;
+    }
+
+    .sidenav {
+        width: 130px;
+        position: fixed;
+        z-index: 1;
+        top: 60px;
+        left: 10px;
+        background: #eee;
+        overflow-x: hidden;
+        padding: 8px 0;
+    }
+
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #2196F3;
+            display: block;
+        }
+
+            .sidenav a:hover {
+                color: #064579;
+            }
+
+    .main {
+        margin-left: 140px; /* Same width as the sidebar + left position in px */
+        padding: 0px 10px;
+    }
+    </style>
+    @*<link href='~/css/'  rel='stylesheet' />*@
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
+            <div class="container-fluid">
+                <button class="openbtn text-black" onclick="openNav(); return false;">☰</button>
+                
+               @* <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">DentalClinic</a>*@
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>  
+        </nav>
+      <partial name="_LoginPartial.cshtml"/>
+    </header>
+    <div id="mySidebar" class="sidebar bg-white" style="width:0px;">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">×</a>
+        <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+            <nav>
+             <ul class="navbar-nav flex-grow-1">
+                 <ul>
+                     <li>Главная
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Главная</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Staffs" asp-action="Index">Сотрудники</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Patients" asp-action="Index">Пациенты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Services" asp-action="Index">Сервисы</a>
+                </li>
+                 <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="ServicesGroups" asp-action="Index">Группа сервисов</a>
+                </li> 
+                 <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Materials" asp-action="Index">Материалы</a>
+                </li>
+                </ul>
+                </li>
+           <li class="navbar-nav flex-grow-1"> График работы
+               <ul>
+               <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="ScheduleTemplates" asp-action="Index">График работы</a>
+                </li>
+               </ul>   
+            </li>
+            <li class="navbar-nav flex-grow-1"> Справочники
+            <ul class="navbar-nav flex-grow-2">
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Positions" asp-action="Index">Должности</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Genders" asp-action="Index">Пол</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Rooms" asp-action="Index">Кабинеты</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-dark" asp-area="" asp-controller="Units" asp-action="Index">Единица измерения</a>
+                </li> 
+                  
+                 
+            </ul>
+            </li>
+             </ul>
+            </nav>
+        </div>      
+    </div>
+    <div id="main" class="main" style="margin-left: 0px;">
+
+            <main role="main" class="pb-3">
+                @RenderBody()
+            </main>
+        </div>
+    <footer class="border-top footer text-muted">
+        <div class="container">
+            &copy; 2022 - DentalClinic - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/menu.js" asp-append-version="true"></script>
+    <script type="module" src="~/js/site.js" asp-append-version="true"></script>
+    <script type="text/javascript" src="~/lib/svg-loader.min.js" async></script>
+    <script src="~/js/teeth_map_script.js"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

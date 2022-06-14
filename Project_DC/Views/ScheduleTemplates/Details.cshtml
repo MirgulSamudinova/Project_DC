@@ -1,0 +1,42 @@
+﻿@model Project_DC.Models.ScheduleTemplate
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>ScheduleTemplate</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Сотрудник
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Staffs.FullName)
+        </dd>
+        <dt class = "col-sm-2">
+            День недели
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.DaysOfWeek.DaysOfWeekName)
+        </dd>
+        <dt class = "col-sm-2">
+          Время начала рабочего дня
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.withTime)
+        </dd>
+        <dt class = "col-sm-2">
+          Время конца рабочего дня
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ToTime)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.TmeplateId">Редактировать</a> |
+    <a asp-action="Index">Назад</a>
+</div>

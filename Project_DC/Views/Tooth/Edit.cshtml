@@ -1,0 +1,49 @@
+﻿@model Project_DC.Models.Tooth
+
+@{
+    ViewData["Title"] = "Edit";
+}
+
+<h1>Edit</h1>
+
+<h4>Tooth</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Edit">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="CurrentNumber" class="control-label"></label>
+                <input asp-for="CurrentNumber" class="form-control" />
+                <span asp-validation-for="CurrentNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToothSectorId" class="control-label"></label>
+                <select asp-for="ToothSectorId" class="form-control" asp-items="ViewBag.ToothSectorId"></select>
+                <span asp-validation-for="ToothSectorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ToothTypeId" class="control-label"></label>
+                <select asp-for="ToothTypeId" class="form-control" asp-items="ViewBag.ToothTypeId"></select>
+                <span asp-validation-for="ToothTypeId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Save" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

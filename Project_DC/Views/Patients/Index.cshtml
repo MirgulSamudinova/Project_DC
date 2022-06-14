@@ -1,0 +1,77 @@
+﻿@model IEnumerable<Project_DC.Models.Patients>
+
+@{
+    ViewData["Title"] = "Главная";
+}
+
+<h1>Пациенты</h1>
+
+<p>
+    <a asp-action="Create">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Фамилия
+            </th>
+            <th>
+              Имя
+            </th>
+            <th>
+                Отчество
+            </th>
+            <th>
+               Дата рождения
+            </th>
+            <th>
+                Пол
+            </th>
+            <th>
+                Номер телефона
+            </th>
+            <th>
+                Адрес электронной почты
+            </th>
+            <th>
+                ИНН
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.LastName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.FirstName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MiddleName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.BirthDate)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Genders.gender)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.MobileNumber)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.e_mail)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.inn)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.PatientId">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.PatientId">Информация</a> |
+                <a asp-action="Delete" asp-route-id="@item.PatientId">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

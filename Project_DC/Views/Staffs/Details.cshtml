@@ -1,0 +1,66 @@
+﻿@model Project_DC.Models.Staffs
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Информация</h1>
+
+<div>
+    <h4>Сотрудник</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Фамилия
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.sure_name)
+        </dd>
+        <dt class = "col-sm-2">
+           Имя
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.first_name)
+        </dd>
+        <dt class = "col-sm-2">
+           Отчество
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.middle_name)
+        </dd>
+        <dt class = "col-sm-2">
+            Дата рождения
+        </dt>
+        <dd class = "col-sm-10">
+             @Html.DisplayFor(model => model.birth_date)
+        </dd>
+        <dt class = "col-sm-2">
+           Номер телефона
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.mobile_number)
+        </dd>
+        <dt class = "col-sm-2">
+            адрес электронной почты
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.e_mail)
+        </dd>
+        <dt class = "col-sm-2">
+            должность
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Positions.position)
+        </dd>
+        <dt class = "col-sm-2">
+            пол
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Genders.gender)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.id_staff">Изменить</a> |
+    <a asp-action="Index">Назад</a>
+</div>

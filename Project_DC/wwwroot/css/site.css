@@ -1,0 +1,171 @@
+﻿p, body, td {
+    font-family: Tahoma, Arial, Helvetica, sans-serif;
+    font-size: 10pt;
+}
+
+body {
+    padding: 0px;
+    margin: 0px;
+    background-color: #ffffff;
+}
+
+a {
+    color: #1155a3;
+}
+
+.space {
+    margin: 10px 0px 10px 0px;
+}
+
+.header {
+    background: #003267;
+    background: linear-gradient(to right, #011329 0%,#00639e 44%,#011329 100%);
+    padding: 20px 10px;
+    color: white;
+    box-shadow: 0px 0px 10px 5px rgba(0,0,0,0.75);
+}
+
+.header a {
+    color: white;
+}
+
+.header h1 a {
+    text-decoration: none;
+}
+
+.header h1 {
+    padding: 0px;
+    margin: 0px;
+}
+
+
+.main {
+    padding: 20px;
+}
+
+.wrap {
+    display: flex;
+}
+
+.left {
+    margin-right: 10px;
+}
+
+.right {
+    flex-grow: 1;
+}
+
+/* context menu icons */
+.icon:before {
+    position: absolute;
+    margin-top: 3px;
+    width: 14px;
+    height: 14px;
+    content: '';
+}
+
+.icon-blue:before {
+    background-color: #1066a8;
+}
+
+.icon-green:before {
+    background-color: #6aa84f;
+}
+
+.icon-yellow:before {
+    background-color: #f1c232;
+}
+
+.icon-red:before {
+    background-color: #cc0000;
+}
+html {
+  font-size: 14px;
+}
+
+@media (min-width: 768px) {
+  html {
+    font-size: 16px;
+  }
+}
+
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 60px;
+}
+
+#mySidebar {
+    background-color: lightblue;
+}
+
+.navbar-toggler {
+    display: none!important;
+}
+
+
+table, th, td {
+    border: 1px solid black;
+    border-collapse: collapse;
+}
+
+table {
+    width: 284px;
+    /*height: 473.6px;*/
+}
+
+.top {
+    height: 235px;
+}
+
+.bottom {
+    height: 220px;
+}
+
+.column {
+    width: 141px;
+    padding: 0px;
+}
+
+.flex {
+    display: flex;
+    height: 100%;
+    width: 100%;
+}
+
+    .flex svg {
+        position: absolute;
+    }
+
+#context-menu {
+    position: fixed;
+    z-index: 10000;
+    width: 150px;
+    background: #1b1a1a;
+    border-radius: 5px;
+    transform: scale(0);
+    transform-origin: top left;
+}
+
+    #context-menu .item {
+        padding: 8px 10px;
+        font-size: 15px;
+        color: #eee;
+        cursor: pointer;
+        border-radius: inherit;
+    }
+
+    #context-menu .item:hover {
+        background: #343434;
+    }
+
+    #context-menu.visible {
+        transform: scale(1);
+        transition: transform 200ms ease-in-out;
+    }
+
+
+

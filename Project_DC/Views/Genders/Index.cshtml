@@ -1,0 +1,35 @@
+﻿@model IEnumerable<Project_DC.Models.Genders>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Главная</h1>
+
+<p>
+    <a asp-action="Create">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Наименование
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td class = "cell">
+                @Html.DisplayFor(modelItem => item.gender)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.id_gender">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.id_gender">Детали</a> |
+                <a asp-action="Delete" asp-route-id="@item.id_gender">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

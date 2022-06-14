@@ -1,0 +1,302 @@
+﻿:root {
+    /* Определение переменной внутри корневого элемента */
+    --base_color: #f1eed8;
+    --repaired_color: #f9f193;
+    --removed_color: #fcbb8f;
+    --empty_color: #badffe;
+    --implantat_color: #d7feba;
+    --permanent-crown-implantat-color: #20c997;
+    --temporary-crown-implantat-color: #0dcaf0;
+}
+
+.table_of_teeth {
+    position: relative;
+}
+
+.tooth_details {
+    height: min-content;
+}
+
+.tooth_details h5 {
+    font-size:1.20em;
+}
+
+.tooth_details h6 {
+    font-size: 0.95em;
+}
+
+.tooth_details .card-body {
+    padding: 0.5rem 0.5rem;
+}
+/*Teeth css*/
+.tooth {
+    fill: var(--base_color);
+    cursor: pointer;
+}
+
+.base-color {
+    fill: var(--base_color);
+}
+
+.repaired-color {
+    fill: var(--repaired_color);
+}
+
+.removed-color {
+    fill: var(--removed_color);
+}
+
+.empty-color {
+    fill: var(--empty_color);
+}
+
+.implantat-color {
+    fill: var(--implantat_color);
+}
+
+.permanent-crown-implantat-color {
+    fill: var(--permanent-crown-implantat-color);
+}
+
+.temporary-crown-implantat-color {
+    fill: var(--temporary-crown-implantat-color);
+}
+
+
+
+/*Top teeth*/
+#tooth_11 {
+    left: 37%;
+    top: 0%;
+}
+
+#tooth_21 {
+    right: 37%;
+    top: 0%;
+}
+
+#tooth_12 {
+    left: 27%;
+    top: 2.6%;
+}
+
+#tooth_22 {
+    right: 27%;
+    top: 2.6%;
+}
+
+#tooth_13 {
+    left: 19%;
+    top: 6.1%;
+}
+
+#tooth_23 {
+    right: 19%;
+    top: 6.1%;
+}
+
+#tooth_14 {
+    left: 14%;
+    top: 12%;
+}
+
+#tooth_24 {
+    right: 14%;
+    top: 12%;
+}
+
+#tooth_15 {
+    left: 10%;
+    top: 18.2%;
+}
+
+#tooth_25 {
+    right: 9.7%;
+    top: 18.2%;
+}
+
+#tooth_16 {
+    left: 5%;
+    top: 23.7%;
+}
+
+#tooth_26 {
+    right: 4.7%;
+    top: 23.7%;
+}
+
+#tooth_17 {
+    left: 1.8%;
+    top: 32.5%;
+}
+
+#tooth_27 {
+    right: 1.7%;
+    top: 32.5%;
+}
+
+#tooth_18 {
+    left: 0%;
+    top: 41.4%;
+}
+
+#tooth_28 {
+    right: 0%;
+    top: 41.4%;
+}
+
+.teeth_top_1 {
+    width: 36.8px;
+    height: 32.9px;
+}
+.teeth_top_2 {
+    width: 30.9px;
+    height: 29.0px;
+}
+.teeth_top_3 {
+    width: 29.9px;
+    height: 33px;
+}
+.teeth_top_4 {
+    width: 36.9px;
+    height: 29.6px;
+}
+.teeth_top_5 {
+    width: 35.4px;
+    height: 28.8px;
+}
+.teeth_top_6 {
+    width: 44.6px;
+    height: 46.2px;
+    
+}
+.teeth_top_7 {
+    width: 45.4px;
+    height: 43.9px;
+}
+.teeth_top_8 {
+    width: 46.1px;
+    height: 40.1px;
+}
+
+/*Bottom teeth*/
+
+.teeth_bottom_1 {
+    width: 24.8px;
+    height: 24.5px;
+}
+
+.teeth_bottom_2 {
+    width: 24.1px;
+    height: 28.2px;
+}
+
+.teeth_bottom_3 {
+    width: 27.3px;
+    height: 29.5px;
+}
+
+.teeth_bottom_4 {
+    width: 31.4px;
+    height: 31.5px;
+}
+
+.teeth_bottom_5 {
+    width: 32.7px;
+    height: 31.4px;
+}
+
+.teeth_bottom_6 {
+    width: 46.0px;
+    height: 48.1px;
+}
+
+.teeth_bottom_7 {
+    width: 41.1px;
+    height: 46.8px;
+}
+
+.teeth_bottom_8 {
+    width: 36.2px;
+    height: 39.6px;
+}
+
+#tooth_31 {
+    right: 41%;
+    bottom: 0.1%;
+}
+
+#tooth_41 {
+    left: 41.3%;
+    bottom: 0.1%;
+}
+
+#tooth_32 {
+    right: 33%;
+    bottom: 1%;
+}
+
+#tooth_42 {
+    left: 33.5%;
+    bottom: 1%;
+}
+
+#tooth_33 {
+    right: 25%;
+    bottom: 2.9%;
+}
+
+#tooth_43 {
+    left: 25.1%;
+    bottom: 2.9%;
+}
+
+#tooth_34 {
+    right: 17.4%;
+    bottom: 7.4%;
+}
+
+#tooth_44 {
+    left: 17.6%;
+    bottom: 7.4%;
+}
+
+#tooth_35 {
+    right: 11.2%;
+    bottom: 13%;
+}
+
+#tooth_45 {
+    left: 11.5%;
+    bottom: 13%;
+}
+
+#tooth_36 {
+    right: 4%;
+    bottom: 18.8%;
+}
+
+#tooth_46 {
+    left: 4.2%;
+    bottom: 18.8%;
+}
+
+#tooth_37 {
+    right: 1.4%;
+    bottom: 28.7%;
+}
+
+#tooth_47 {
+    left: 1.7%;
+    bottom: 28.7%;
+}
+
+#tooth_38 {
+    right: 1.6%;
+    bottom: 38.5%;
+}
+
+#tooth_48 {
+    left: 1.9%;
+    bottom: 38.5%;
+}

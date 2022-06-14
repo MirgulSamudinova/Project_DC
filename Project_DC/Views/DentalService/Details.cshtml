@@ -1,0 +1,42 @@
+@model Project_DC.Models.DentalService
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>DentalService</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.NameOfService)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.NameOfService)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model._DentalServiceGroup)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model._DentalServiceGroup.Id)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.IsToothService)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.IsToothService)
+        </dd>
+        <dt class = "col-sm-2">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>

@@ -1,0 +1,45 @@
+﻿@model Project_DC.Models.Services
+
+@{
+    ViewData["Title"] = "Delete";
+}
+
+
+
+<h3>Вы действительно хотите удалить запись?</h3>
+<div>
+    <h4>Услуга</h4>
+    <hr />
+    <dl class="row">
+        <dt class = "col-sm-2">
+            Наименование
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ServiceName)
+        </dd>
+        <dt class = "col-sm-2">
+          Цена
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.price)
+        </dd>
+        <dt class = "col-sm-2">
+            Тип услуги
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.typeService)
+        </dd>
+        <dt class = "col-sm-2">
+            Группы
+        </dt>
+        <dd class = "col-sm-10">
+            @Html.DisplayFor(model => model.ServicesGroup.IdGroup)
+        </dd>
+    </dl>
+    
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="IdService" />
+        <input type="submit" value="Удалить" class="btn btn-danger" /> |
+        <a asp-action="Index">Назад</a>
+    </form>
+</div>

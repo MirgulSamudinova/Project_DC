@@ -1,0 +1,27 @@
+@model IEnumerable<Project_DC.Models.ClientsTooth>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model._Tooth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model._ToothState)
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item._Tooth.ToothId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._ToothState.ToothStateName)
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

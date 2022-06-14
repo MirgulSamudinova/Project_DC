@@ -1,0 +1,53 @@
+﻿@model IEnumerable<Project_DC.Models.Services>
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Главная</h1>
+
+<p>
+    <a asp-action="Create">Добавить</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+               Наименование
+            </th>
+            <th>
+               Цена
+            </th>
+            <th>
+                Тип услуги
+            </th>
+            <th>
+              Группа
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServiceName)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.price)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.typeService)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ServicesGroup.IdGroup)
+            </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.IdService">Редактировать</a> |
+                <a asp-action="Details" asp-route-id="@item.IdService">Информация</a> |
+                <a asp-action="Delete" asp-route-id="@item.IdService">Удалить</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

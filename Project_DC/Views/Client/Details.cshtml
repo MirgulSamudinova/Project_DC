@@ -1,0 +1,67 @@
+@model Project_DC.Models.Client
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h1>Details</h1>
+<div class="row">
+    <h4>Client</h4>
+    <hr />
+</div>
+<div class="row">
+    <div class="col">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.FIO)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FIO)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.DateOfBirth)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.DateOfBirth_value)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.HealthData)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.HealthData)
+            </dd>
+        </dl>
+        <div class="row">
+            @{
+                await Html.RenderPartialAsync("~/Views/Partial/ClientsToothList.cshtml", Model.ClientsTeeth.FindAll(x=>x.ToothStateId != 1));
+                await Html.RenderPartialAsync("~/Views/Partial/ClientsServiceList.cshtml", Model.ClientsServices);
+            }
+        </div>
+    </div>
+    <div class="col pe-0">
+        @{
+            await Html.RenderPartialAsync("~/Views/Shared/TeethMap.cshtml");
+        }
+    </div>
+</div>
+
+
+<div>
+    <a asp-action="Edit" asp-route-id="@Model?.Id">Edit</a> |
+    <a asp-action="Index">Back to List</a>
+</div>
+
+
+@section Scripts {
+
+    <script type="module">
+        import { TeethMap, ToothStat, hideContextMenu } from '/js/modules/TeethMap.js';
+        document.addEventListener("DOMContentLoaded", function () {
+            let map = new TeethMap('teeth_map', 'teeth_map_1', 1);
+            map.setAPI("/api/ClientsTooth/");
+            map.getClientsTeethByAPI();
+            //map.drawTeethMap();
+
+        });
+    </script>
+}
