@@ -21,7 +21,7 @@ namespace Project_DC.Controllers
         // GET: ClientsTooth
         public async Task<IActionResult> Index()
         {
-            var DBContext = _context.ClientsTeeth.Include(c => c._Client).Include(c => c._Tooth).ThenInclude(c => c._ToothSector).Include(c => c._ToothState);
+            var DBContext = _context.ClientsTeeth.Include(c => c._Patients).Include(c => c._Tooth).ThenInclude(c => c._ToothSector).Include(c => c._ToothState);
             return View(await DBContext.ToListAsync());
         }
 
@@ -34,7 +34,7 @@ namespace Project_DC.Controllers
             }
 
             var clientsTooth = await _context.ClientsTeeth
-                .Include(c => c._Client)
+                .Include(c => c._Patients)
                 .Include(c => c._Tooth)
                 .Include(c => c._ToothState)
                 .Include(c => c._Tooth._ToothSector)
@@ -50,7 +50,7 @@ namespace Project_DC.Controllers
         // GET: ClientsTooth/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "FIO");
+            ViewData["ClientId"] = new SelectList(_context.Patients, "Id", "FIO");
             ViewData["ToothId"] = new SelectList(_context.Teeth.Include(x => x._ToothSector), "Id", "ToothDetails");
             ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName");
             return View();
@@ -69,7 +69,7 @@ namespace Project_DC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "FIO", clientsTooth.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Patients, "Id", "FIO", clientsTooth.PatientsId);
             ViewData["ToothId"] = new SelectList(_context.Teeth.Include(x => x._ToothSector), "Id", "ToothDetails", clientsTooth.ToothId);
             ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName", clientsTooth.ToothStateId);
             return View(clientsTooth);
@@ -83,7 +83,7 @@ namespace Project_DC.Controllers
                 return NotFound();
             }
             var clientsTooth = await _context.ClientsTeeth
-                .Include(c => c._Client)
+                .Include(c => c._Patients)
                 .Include(c => c._Tooth).ThenInclude(c=>c._ToothSector)
                 .Include(c => c._ToothState)
                 .FirstOrDefaultAsync(m => m.Id == id);
@@ -91,7 +91,7 @@ namespace Project_DC.Controllers
             {
                 return NotFound();
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "FIO", clientsTooth.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Patients, "Id", "FIO", clientsTooth.PatientsId);
             ViewData["ToothId"] = new SelectList(_context.Teeth.Include(x=>x._ToothSector), "Id", "ToothDetails", clientsTooth.ToothId);
             ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName", clientsTooth.ToothStateId);
             return View(clientsTooth);
@@ -102,7 +102,7 @@ namespace Project_DC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,ToothId,ToothStateId")] ClientsTooth clientsTooth)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PatientsId,ToothId,ToothStateId")] ClientsTooth clientsTooth)
         {
             if (id != clientsTooth.Id)
             {
@@ -129,7 +129,7 @@ namespace Project_DC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "FIO", clientsTooth.ClientId);
+            ViewData["ClientId"] = new SelectList(_context.Patients, "Id", "FIO", clientsTooth.PatientsId);
             ViewData["ToothId"] = new SelectList(_context.Teeth.Include(x => x._ToothSector), "Id", "ToothId", clientsTooth.ToothId);
             ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName", clientsTooth.ToothStateId);
             return View(clientsTooth);
@@ -144,7 +144,7 @@ namespace Project_DC.Controllers
             }
 
             var clientsTooth = await _context.ClientsTeeth
-                .Include(c => c._Client)
+                .Include(c => c._Patients)
                 .Include(c => c._Tooth).ThenInclude(c => c._ToothSector)
                 .Include(c => c._ToothState)
                 .FirstOrDefaultAsync(m => m.Id == id);

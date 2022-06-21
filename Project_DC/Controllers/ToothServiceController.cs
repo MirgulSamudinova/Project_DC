@@ -21,7 +21,11 @@ namespace Project_DC.Controllers
         // GET: ToothService
         public async Task<IActionResult> Index()
         {
-            var DBContext = _context.ToothServices.Include(t => t._DentalService).Include(t => t._ClientsTooth).ThenInclude(x=>x._Tooth).ThenInclude(x=>x._ToothSector);
+            var DBContext = _context.ToothServices
+                            .Include(t => t._DentalService)
+                            .Include(t => t._ClientsTooth)
+                                .ThenInclude(x=>x._Tooth)
+                                .ThenInclude(x=>x._ToothSector);
             return View(await DBContext.ToListAsync());
         }
 
@@ -35,22 +39,34 @@ namespace Project_DC.Controllers
 
             var toothService = await _context.ToothServices
                 .Include(t => t._DentalService)
-                .Include(t => t._ClientsTooth).ThenInclude(x => x._Tooth).ThenInclude(x => x._ToothSector)
+                .Include(t => t._ClientsTooth).ThenInclude(x => x._Tooth)
+                                              .ThenInclude(x => x._ToothSector)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (toothService == null)
             {
                 return NotFound();
             }
 
-            return View(toothService);
+            return PartialView("ToothServiceDetails", toothService);
         }
 
         // GET: ToothService/Create
-        public IActionResult Create()
+        public IActionResult Create(int? clientsServiceId)
         {
-            ViewData["DentalServiceId"] = new SelectList(_context.DentalServices, "Id", "NameOfService");
-            ViewData["ClientsToothId"] = new SelectList(_context.ClientsTeeth, "Id", "ToothDetails");
-            return View();
+            _context.Teeth.Include(x => x._ToothSector).Load();
+            var client = _context
+                .ClientsServices
+                .Include(x=>x._Patients)
+                    .ThenInclude(x=>x.ClientsTeeth)
+                .FirstOrDefault(x => x.Id == clientsServiceId);
+
+            var dentalServicesList = _context.DentalServices.Where(x => x.IsToothService);
+            var clientsTeeth = client._Patients.ClientsTeeth
+                .Where(x=>x.PatientsId == client.PatientsId)
+                .OrderBy(x=> x.ToothId);
+            ViewData["DentalServiceId"] = new SelectList(dentalServicesList, "Id", "NameOfService");
+            ViewData["ClientsToothId"] = new SelectList(clientsTeeth, "Id", "ToothDetails");
+            return PartialView("ToothServiceModal");
         }
 
         // POST: ToothService/Create
@@ -64,6 +80,22 @@ namespace Project_DC.Controllers
             {
                 _context.Add(toothService);
                 await _context.SaveChangesAsync();
+                if (toothService.IsToothStateChange)
+                {
+                    var clientsTooth = await _context.ClientsTeeth.FirstAsync(id => id.Id == toothService.ClientsToothId);
+                    if(clientsTooth != null)
+                    {
+                        var dentalService = await _context.DentalServices.FirstAsync(id => id.Id == toothService.DentalServiceId);
+                        if(dentalService != null && dentalService.ToothStateId != null)
+                        {
+                            clientsTooth.ToothStateId = (int)dentalService.ToothStateId;
+                            _context.Update(clientsTooth);
+                            await _context.SaveChangesAsync();
+                        }
+                        
+                    }
+                }
+                
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DentalServiceId"] = new SelectList(_context.DentalServices, "Id", "NameOfService", toothService.DentalServiceId);
@@ -90,7 +122,8 @@ namespace Project_DC.Controllers
             }
             ViewData["DentalServiceId"] = new SelectList(_context.DentalServices, "Id", "NameOfService", toothService.DentalServiceId);
             ViewData["ClientsToothId"] = new SelectList(_context.ClientsTeeth, "Id", "ToothDetails", toothService.ClientsToothId);
-            return View(toothService);
+            return PartialView("ToothServiceModal", toothService);
+            //return View(toothService);
         }
 
         // POST: ToothService/Edit/5
@@ -111,6 +144,22 @@ namespace Project_DC.Controllers
                 {
                     _context.Update(toothService);
                     await _context.SaveChangesAsync();
+
+                    if (toothService.IsToothStateChange)
+                    {
+                        var clientsTooth = await _context.ClientsTeeth.FirstAsync(id => id.Id == toothService.ClientsToothId);
+                        if (clientsTooth != null)
+                        {
+                            var dentalService = await _context.DentalServices.FirstAsync(id => id.Id == toothService.DentalServiceId);
+                            if (dentalService != null && dentalService.ToothStateId != null)
+                            {
+                                clientsTooth.ToothStateId = (int)dentalService.ToothStateId;
+                                _context.Update(clientsTooth);
+                                await _context.SaveChangesAsync();
+                            }
+
+                        }
+                    }
                 }
                 catch (DbUpdateConcurrencyException)
                 {

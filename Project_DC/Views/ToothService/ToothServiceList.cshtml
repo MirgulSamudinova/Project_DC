@@ -1,0 +1,45 @@
+﻿@model IEnumerable<Project_DC.Models.ToothService>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.ClientsToothId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.DentalServiceId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Comment)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Price)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item._ClientsTooth._Tooth.ToothDetails)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item._DentalService.NameOfService)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Comment)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Price)
+                </td>
+                <td>
+                    <button value="@item.Id" class="EditToothService">Edit</button> |
+                    <button value="@item.Id" class="DetailsToothService">Details</button> |
+                    <button value="@item.Id" class="DeleteToothService">Delete</button>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

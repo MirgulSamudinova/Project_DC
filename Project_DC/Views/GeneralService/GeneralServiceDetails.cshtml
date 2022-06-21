@@ -1,0 +1,29 @@
+@model Project_DC.Models.GeneralService
+<div>
+    <dl class="row">
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model._DentalService.DentalServiceGroupId)
+        </dt>
+        <dd class="col-sm-7">
+            @Html.DisplayFor(model => model._DentalService._DentalServiceGroup.DentalServiceGroupName)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.DentalServiceId)
+        </dt>
+        <dd class="col-sm-7">
+            @Html.DisplayFor(model => model._DentalService.NameOfService)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-7">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+        <dt class="col-sm-3">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-7">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+    </dl>
+</div>

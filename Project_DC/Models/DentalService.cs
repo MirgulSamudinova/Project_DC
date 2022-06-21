@@ -21,6 +21,10 @@ namespace Project_DC.Models
 		[Display(Name = "Цена")]
 		public double Price { get; set; }
 
+		[Display(Name = "Изменение статуса зуба на:")]
+		public int? ToothStateId { get; set; }
+		public ToothState? _ToothState { get; set; }
+
 		public DentalService()
 		{
 		}

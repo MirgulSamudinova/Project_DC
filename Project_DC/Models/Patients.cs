@@ -25,6 +25,19 @@ namespace Project_DC.Models
 
         public string inn { get; set; }
 
+        public virtual List<ClientsTooth>? ClientsTeeth { get; set; }
+
+        public virtual List<ClientsService>? ClientsServices { get; set; }
+
+
+        public string FullName
+        {
+            get
+            {
+                return LastName + ' ' + FirstName + ' ' + MiddleName;
+            }
+        }
+
 
         [ForeignKey("GenderId")]
         public Genders? Genders { get; set; }    

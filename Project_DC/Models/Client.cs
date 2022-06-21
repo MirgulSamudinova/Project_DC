@@ -18,7 +18,6 @@ namespace Project_DC.Models
 
 		public virtual List<ClientsTooth>? ClientsTeeth { get; set; }
 
-		public virtual List<ClientsService>? ClientsServices { get; set; }
 
 		internal string DateOfBirth_value {
             get {

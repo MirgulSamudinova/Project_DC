@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -26,7 +27,7 @@ namespace Project_DC.Controllers
         }
 
         // GET: GeneralService/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.GeneralService == null)
             {
@@ -35,20 +36,30 @@ namespace Project_DC.Controllers
 
             var generalService = await _context.GeneralService
                 .Include(g => g._DentalService)
+                .ThenInclude(x=>x._DentalServiceGroup)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (generalService == null)
             {
                 return NotFound();
             }
 
-            return View(generalService);
+            return PartialView("GeneralServiceDetails", generalService);
         }
 
         // GET: GeneralService/Create
-        public IActionResult Create()
+        public IActionResult Create(int? clientsServiceId)
         {
+            if (clientsServiceId == null || _context.ClientsServices.Count(x=>x.Id == clientsServiceId) != 1)
+            {
+                return NotFound();
+            }
+
+            var generalService = new GeneralService();
+            generalService.ClientsServiceId = (int)clientsServiceId;
+
+
             ViewData["DentalServiceId"] = new SelectList(GetDentalServices(), "Id", "NameOfService");
-            return View();
+            return PartialView("GeneralServiceModal", generalService);
         }
 
         // POST: GeneralService/Create
@@ -91,7 +102,9 @@ namespace Project_DC.Controllers
             
 
             ViewData["DentalServiceId"] = new SelectList(GetDentalServices(), "Id", "NameOfService", generalService.DentalServiceId);
-            return View(generalService);
+            ViewData["DentalServiceGroup"] = new SelectList(_context.DentalServiceGroups, "Id", "DentalServiceGroupName", generalService._DentalService.DentalServiceGroupId);
+   
+            return PartialView("GeneralServiceModal", generalService);
         }
 
         // POST: GeneralService/Edit/5
@@ -99,7 +112,7 @@ namespace Project_DC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,DentalServiceId,Comment,Price")] GeneralService generalService)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientsServiceId,DentalServiceId,Comment,Price")] GeneralService generalService)
         {
             if (id != generalService.Id)
             {
@@ -124,53 +137,17 @@ namespace Project_DC.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Edit", "ClientsService");
             }
             ViewData["DentalServiceId"] = new SelectList(GetDentalServices(), "Id", "NameOfService", generalService.DentalServiceId);
             return View(generalService);
         }
 
-        // GET: GeneralService/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null || _context.GeneralService == null)
-            {
-                return NotFound();
-            }
-
-            var generalService = await _context.GeneralService
-                .Include(g => g._DentalService)
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (generalService == null)
-            {
-                return NotFound();
-            }
-
-            return View(generalService);
-        }
-
-        // POST: GeneralService/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            if (_context.GeneralService == null)
-            {
-                return Problem("Entity set 'DBContext.GeneralService'  is null.");
-            }
-            var generalService = await _context.GeneralService.FindAsync(id);
-            if (generalService != null)
-            {
-                _context.GeneralService.Remove(generalService);
-            }
-            
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
 
         private bool GeneralServiceExists(int id)
         {
           return (_context.GeneralService?.Any(e => e.Id == id)).GetValueOrDefault();
         }
+
     }
 }

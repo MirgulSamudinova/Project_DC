@@ -1,0 +1,35 @@
+@model Project_DC.Models.ToothService
+<div>
+    <dl class="row">
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.ClientsToothId)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model._ClientsTooth.ToothDetails)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.DentalServiceId)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model._DentalService.NameOfService)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Comment)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model.Comment)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.Price)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model.Price)
+        </dd>
+        <dt class="col-sm-4">
+            @Html.DisplayNameFor(model => model.IsToothStateChange)
+        </dt>
+        <dd class="col-sm-6">
+            @Html.DisplayFor(model => model.IsToothStateChange)
+        </dd>
+    </dl>
+</div>

@@ -36,7 +36,6 @@ namespace Project_DC.Controllers
             _context.ClientsTeeth.Include(x => x._Tooth).ThenInclude(x=>x._ToothSector).Include(x => x._ToothState).Load();
             var client = await _context.Clients
                 .Include(c => c.ClientsTeeth)
-                .Include(c=>c.ClientsServices)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (client == null)
             {

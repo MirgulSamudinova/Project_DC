@@ -1,32 +1,32 @@
-@model Project_DC.Models.ClientsTooth
+﻿@model Project_DC.Models.ClientsService
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Copy";
 }
 
-<h1>Edit</h1>
+<h1>Copy</h1>
 
-<h4>ClientsTooth</h4>
+<h4>ClientsService</h4>
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="Edit">
+        <form asp-action="Copy">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
             <div class="form-group">
                 <label asp-for="PatientsId" class="control-label"></label>
-                <select asp-for="PatientsId" class="form-control" asp-items="ViewBag.ClientId"></select>
+                <select asp-for="PatientsId" class="form-control" asp-items="ViewBag.PatientsId"></select>
                 <span asp-validation-for="PatientsId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ToothId" class="control-label"></label>
-                <select asp-for="ToothId" class="form-control" asp-items="ViewBag.ToothId"></select>
-                <span asp-validation-for="ToothId" class="text-danger"></span>
+                <label asp-for="StaffsId" class="control-label"></label>
+                <select asp-for="StaffsId" class="form-control" asp-items="ViewBag.StaffId"></select>
+                <span asp-validation-for="StaffsId" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="ToothStateId" class="control-label"></label>
-                <select asp-for="ToothStateId" class="form-control" asp-items="ViewBag.ToothStateId"></select>
-                <span asp-validation-for="ToothStateId" class="text-danger"></span>
+                <label asp-for="ServiceDate" class="control-label"></label>
+                <input asp-for="ServiceDate" class="form-control" type="date" />
+                <span asp-validation-for="ServiceDate" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

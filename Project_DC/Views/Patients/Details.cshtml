@@ -5,62 +5,98 @@
 }
 
 <h1>Details</h1>
-
-<div>
-    <h4>Patients</h4>
+<div class="row">
+    <h4>Пациент</h4>
     <hr />
-    <dl class="row">
-        <dt class = "col-sm-2">
-            Фамилия
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.LastName)
-        </dd>
-        <dt class = "col-sm-2">
-            Имя
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.FirstName)
-        </dd>
-        <dt class = "col-sm-2">
-           Отчество
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MiddleName)
-        </dd>
-        <dt class = "col-sm-2">
-            Дата рождения
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.BirthDate)
-        </dd>
-        <dt class = "col-sm-2">
-           Пол
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.Genders.gender)
-        </dd>
-        <dt class = "col-sm-2">
-           Номер мобильного телефона
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.MobileNumber)
-        </dd>
-        <dt class = "col-sm-2">
-            Адрес электронной почты
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.e_mail)
-        </dd>
-        <dt class = "col-sm-2">
-            ИНН
-        </dt>
-        <dd class = "col-sm-10">
-            @Html.DisplayFor(model => model.inn)
-        </dd>
-    </dl>
 </div>
-<div>
-    <a asp-action="Edit" asp-route-id="@Model?.PatientId">Редактировать</a> |
-    <a asp-action="Index">Назад</a>
+<div class="row">
+    <div class="col">
+        <dl class="row">
+            <dt class="col-sm-2">
+                Фамилия
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.LastName)
+            </dd>
+            <dt class="col-sm-2">
+                Имя
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.FirstName)
+            </dd>
+            <dt class="col-sm-2">
+                Отчество
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MiddleName)
+            </dd>
+            <dt class="col-sm-2">
+                Дата рождения
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.BirthDate)
+            </dd>
+            <dt class="col-sm-2">
+                Пол
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Genders.gender)
+            </dd>
+            <dt class="col-sm-2">
+                Номер мобильного телефона
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.MobileNumber)
+            </dd>
+            <dt class="col-sm-2">
+                Адрес электронной почты
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.e_mail)
+            </dd>
+            <dt class="col-sm-2">
+                ИНН
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.inn)
+            </dd>
+        </dl>
+        <div class="row">
+            <a asp-action="Edit" asp-route-id="@Model?.PatientId">Редактировать</a> |
+            <a asp-action="Index">Назад</a>
+        </div>
+        <div class="row">
+            @{
+
+                if (Model.ClientsTeeth != null)
+                {
+                    await Html.RenderPartialAsync("~/Views/Partial/ClientsToothList.cshtml", Model.ClientsTeeth.FindAll(x => x.ToothStateId != 1));
+
+                }
+
+                if (Model.ClientsServices != null)
+                {
+                    await Html.RenderPartialAsync("~/Views/Partial/ClientsServiceList.cshtml", Model.ClientsServices);
+
+                }
+            }
+        </div>
+    </div>
+    <div class="col pe-0">
+        @{
+            await Html.RenderPartialAsync("~/Views/Shared/TeethMap.cshtml");
+        }
+    </div>
 </div>
+@section Scripts {
+
+    <script type="module">import { TeethMap, ToothStat, hideContextMenu } from '/js/modules/TeethMap.js';
+        document.addEventListener("DOMContentLoaded", function () {
+            let map = new TeethMap('teeth_map', 'teeth_map_1', 1);
+            map.setAPI("/api/ClientsTooth/");
+            map.getClientsTeethByAPI();
+            //map.drawTeethMap();
+
+        });</script>
+}
+

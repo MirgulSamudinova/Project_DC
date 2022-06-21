@@ -4,10 +4,10 @@
     <thead>
         <tr>
             <th>
-                @Html.DisplayNameFor(model => model._Tooth)
+                @Html.DisplayNameFor(model => model.ToothId)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model._ToothState)
+                @Html.DisplayNameFor(model => model.ToothStateId)
             </th>
         </tr>
     </thead>
@@ -16,7 +16,7 @@
         {
             <tr>
                 <td>
-                    @Html.DisplayFor(modelItem => item._Tooth.ToothId)
+                    @Html.DisplayFor(modelItem => item._Tooth.ToothDetails)
                 </td>
                 <td>
                     @Html.DisplayFor(modelItem => item._ToothState.ToothStateName)

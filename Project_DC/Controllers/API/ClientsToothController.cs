@@ -41,9 +41,9 @@ namespace Project_DC.Controllers.API
           }
             var clientsTooth = _context.ClientsTeeth
                 .Include(x=>x._ToothState)
-                .Include(x=>x._Client)
+                .Include(x=>x._Patients)
                 .Include(x=>x._Tooth).ThenInclude(x=>x._ToothSector)
-                .Where(x => x._Client != null && x.ClientId == id).ToList();
+                .Where(x => x._Patients != null && x.PatientsId == id).ToList();
 
             if (clientsTooth == null)
             {
@@ -63,9 +63,9 @@ namespace Project_DC.Controllers.API
             }
             var clientsTeeth = _context.ClientsTeeth
                 .Include(x => x._ToothState)
-                .Include(x => x._Client)
+                .Include(x => x._Patients)
                 .Include(x => x._Tooth).ThenInclude(x => x._ToothSector)
-                .Where(x => x._Client != null && x.ClientId == id ).ToList();
+                .Where(x => x._Patients != null && x.PatientsId == id ).ToList();
 
             var clientsTooth = clientsTeeth == null ? null : clientsTeeth.Find(x => x._Tooth != null && x._Tooth.ToothId == toothId);
 
@@ -74,10 +74,11 @@ namespace Project_DC.Controllers.API
                 ClientsTooth clientsToothNew = new ClientsTooth();
                 int curNo = Int32.Parse(toothId.Substring(1, 1));
                 int sector = Int32.Parse(toothId.Substring(0, 1));
-                clientsToothNew.ClientId = id;
+                clientsToothNew.PatientsId = id;
                 var toothList = _context.Teeth
                     .Include(x=>x._ToothSector)
-                    .Where(x => x._ToothSector.NumberOfSector == sector && x.CurrentNumber == curNo).ToList();
+                    .Where(x => x._ToothSector.NumberOfSector == sector && x.CurrentNumber == curNo)
+                    .ToList();
 
                 Tooth tooth = toothList == null || toothList.Count() == 0 ? null : toothList[0];
 
@@ -95,9 +96,9 @@ namespace Project_DC.Controllers.API
                     return Problem("Entity set 'DBContext.ClientsTeeth'  is null.");
                 }
                 _context.ClientsTeeth.Add(clientsToothNew);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
-                return CreatedAtAction("GetClientsTooth", new { id = clientsToothNew.ClientId, toothId = clientsToothNew._Tooth.ToothId }, clientsToothNew);
+                return CreatedAtAction("GetClientsTooth", new { id = clientsToothNew.PatientsId, toothId = clientsToothNew._Tooth.ToothId }, clientsToothNew);
 
             }
 

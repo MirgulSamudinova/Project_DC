@@ -21,21 +21,44 @@ namespace Project_DC.Controllers
         // GET: ClientsService
         public async Task<IActionResult> Index()
         {
-            var DBContext = _context.ClientsServices.Include(c => c._Client);
+            
+            var DBContext = _context.ClientsServices
+                .Include(x=>x._Staffs)
+                .Include(x=>x.GeneralServices)
+
+                .Include(c => c._Patients);
             return View(await DBContext.ToListAsync());
         }
 
         // GET: ClientsService/Details/5
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
             if (id == null || _context.ClientsServices == null)
             {
                 return NotFound();
             }
-
+            _context.ToothServices
+                .Include(x => x._ClientsTooth)
+                    .ThenInclude(x => x._Tooth)
+                .Include(x=>x._DentalService)
+                .Load();
+            _context.GeneralService
+                .Include(x => x._DentalService)
+                .Load();
             var clientsService = await _context.ClientsServices
-                .Include(c => c._Client)
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .Include(x => x.GeneralServices)
+                .Include(c => c._Patients)
+                .Include(c => c._Staffs)
+                .Include(c => c.ToothServices)
+                .FirstAsync(x => x.Id == id);
+            if (clientsService.GeneralServices == null)
+            {
+                clientsService.GeneralServices = new List<GeneralService>();
+            }
+            if (clientsService.ToothServices == null)
+            {
+                clientsService.ToothServices = new List<ToothService>();
+            }
             if (clientsService == null)
             {
                 return NotFound();
@@ -47,7 +70,9 @@ namespace Project_DC.Controllers
         // GET: ClientsService/Create
         public IActionResult Create()
         {
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id");
+            var patients = _context.Patients.ToList();
+            ViewData["PatientsId"] = new SelectList(_context.Patients.ToList(), "PatientId", "FullName");
+            ViewData["StaffId"] = new SelectList(_context.Staffs.ToList(), "id_staff", "FullName");
             return View();
         }
 
@@ -56,7 +81,7 @@ namespace Project_DC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ClientId,StaffId,ServiceDate")] ClientsService clientsService)
+        public async Task<IActionResult> Create([Bind("Id,PatientsId,StaffsId,ServiceDate")] ClientsService clientsService)
         {
             if (ModelState.IsValid)
             {
@@ -64,7 +89,8 @@ namespace Project_DC.Controllers
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", clientsService.ClientId);
+            ViewData["PatientsId"] = new SelectList(_context.Patients, "PatientId", "FullName", clientsService.PatientsId);
+            ViewData["StaffId"] = new SelectList(_context.Staffs.ToList(), "id_staff", "FullName",clientsService.StaffsId);
             return View(clientsService);
         }
 
@@ -75,13 +101,23 @@ namespace Project_DC.Controllers
             {
                 return NotFound();
             }
-
-            var clientsService = await _context.ClientsServices.FindAsync(id);
+            _context.GeneralService
+                .Include(x => x._DentalService)
+                .Load();
+            var clientsService = await _context.ClientsServices
+                .Include(x=>x.GeneralServices)
+                .FirstAsync(x=>x.Id == (int)id);
+            if (clientsService.GeneralServices == null)
+            {
+                clientsService.GeneralServices = new List<GeneralService>();
+            }
             if (clientsService == null)
             {
                 return NotFound();
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", clientsService.ClientId);
+            ViewData["PatientsId"] = new SelectList(_context.Patients, "PatientId", "FullName", clientsService.PatientsId);
+            ViewData["StaffId"] = new SelectList(_context.Staffs.ToList(), "id_staff", "FullName", clientsService.StaffsId);
+
             return View(clientsService);
         }
 
@@ -90,7 +126,7 @@ namespace Project_DC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ClientId,StaffId,ServiceDate")] ClientsService clientsService)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,PatientsId,StaffsId,ServiceDate")] ClientsService clientsService)
         {
             if (id != clientsService.Id)
             {
@@ -117,7 +153,44 @@ namespace Project_DC.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            ViewData["ClientId"] = new SelectList(_context.Clients, "Id", "Id", clientsService.ClientId);
+            ViewData["PatientsId"] = new SelectList(_context.Patients, "PatientId", "FullName", clientsService.PatientsId);
+            ViewData["StaffId"] = new SelectList(_context.Staffs.ToList(), "id_staff", "FullName", clientsService.StaffsId);
+            return View(clientsService);
+        }
+
+        // GET: ClientsService/Edit/5
+        public async Task<IActionResult> Copy(int? id)
+        {
+            if (id == null || _context.ClientsServices == null)
+            {
+                return NotFound();
+            }
+
+            var clientsService = await _context.ClientsServices.FindAsync(id);
+            if (clientsService == null)
+            {
+                return NotFound();
+            }
+            ViewData["PatientsId"] = new SelectList(_context.Patients, "PatientId", "FullName", clientsService.PatientsId);
+            ViewData["StaffId"] = new SelectList(_context.Staffs.ToList(), "id_staff", "FullName", clientsService.StaffsId);
+            return View(clientsService);
+        }
+
+        // POST: ClientsService/Edit/5
+        // To protect from overposting attacks, enable the specific properties you want to bind to.
+        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Copy(int id, [Bind("PatientsId,StaffsId,ServiceDate")] ClientsService clientsService)
+        {
+            if (ModelState.IsValid)
+            {
+                _context.Add(clientsService);
+                await _context.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            ViewData["PatientsId"] = new SelectList(_context.Patients, "PatientId", "FullName", clientsService.PatientsId);
+            ViewData["StaffId"] = new SelectList(_context.Staffs.ToList(), "id_staff", "FullName", clientsService.StaffsId);
             return View(clientsService);
         }
 
@@ -130,7 +203,7 @@ namespace Project_DC.Controllers
             }
 
             var clientsService = await _context.ClientsServices
-                .Include(c => c._Client)
+                .Include(c => c._Patients)
                 .FirstOrDefaultAsync(m => m.Id == id);
             if (clientsService == null)
             {

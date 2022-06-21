@@ -38,9 +38,16 @@ namespace Project_DC.Controllers
                 return NotFound();
             }
 
+            await _context.Staffs.LoadAsync();
+            await _context.ClientsTeeth
+                .Include(o=>o._Tooth)
+                    .ThenInclude(c => c._ToothSector)
+                .Include(o=>o._ToothState)
+                .LoadAsync();
             var patients = await _context.Patients
                 .Include(g=>g.Genders)
-                .AsNoTracking()
+                .Include(i=>i.ClientsTeeth)
+                .Include(i=>i.ClientsServices)
                 .FirstOrDefaultAsync(m => m.PatientId == id);
             if (patients == null)
             {

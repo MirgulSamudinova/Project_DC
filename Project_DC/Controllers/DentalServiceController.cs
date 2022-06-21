@@ -48,6 +48,7 @@ namespace Project_DC.Controllers
         public IActionResult Create()
         {
             ViewData["DentalServiceGroupId"] = new SelectList(_context.DentalServiceGroups, "Id", "DentalServiceGroupName");
+            ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName");
             return View();
         }
 
@@ -56,7 +57,7 @@ namespace Project_DC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,NameOfService,DentalServiceGroupId,IsToothService,Price")] DentalService dentalService)
+        public async Task<IActionResult> Create([Bind("NameOfService,DentalServiceGroupId,IsToothService,ToothStateId,Price")] DentalService dentalService)
         {
             if (ModelState.IsValid)
             {
@@ -65,6 +66,7 @@ namespace Project_DC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DentalServiceGroupId"] = new SelectList(_context.DentalServiceGroups, "Id", "DentalServiceGroupName", dentalService.DentalServiceGroupId);
+            ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName", dentalService.ToothStateId);
             return View(dentalService);
         }
 
@@ -82,6 +84,7 @@ namespace Project_DC.Controllers
                 return NotFound();
             }
             ViewData["DentalServiceGroupId"] = new SelectList(_context.DentalServiceGroups, "Id", "DentalServiceGroupName", dentalService.DentalServiceGroupId);
+            ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName", dentalService.ToothStateId);
             return View(dentalService);
         }
 
@@ -90,7 +93,7 @@ namespace Project_DC.Controllers
         // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,NameOfService,DentalServiceGroupId,IsToothService,Price")] DentalService dentalService)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,NameOfService,DentalServiceGroupId,IsToothService,ToothStateId,Price")] DentalService dentalService)
         {
             if (id != dentalService.Id)
             {
@@ -101,6 +104,10 @@ namespace Project_DC.Controllers
             {
                 try
                 {
+                    if(dentalService.ToothStateId == 0)
+                    {
+                        dentalService.ToothStateId = null;
+                    }
                     _context.Update(dentalService);
                     await _context.SaveChangesAsync();
                 }
@@ -118,6 +125,8 @@ namespace Project_DC.Controllers
                 return RedirectToAction(nameof(Index));
             }
             ViewData["DentalServiceGroupId"] = new SelectList(_context.DentalServiceGroups, "Id", "DentalServiceGroupName", dentalService.DentalServiceGroupId);
+            ViewData["ToothStateId"] = new SelectList(_context.ToothStates, "Id", "ToothStateName", dentalService.ToothStateId);
+
             return View(dentalService);
         }
 

@@ -39,7 +39,6 @@ namespace Project_DC.Models
         public DbSet<ToothSector>? ToothSectors { get; set; }
         public DbSet<Tooth>? Teeth { get; set; }
         public DbSet<ToothState>? ToothStates { get; set; }
-        public DbSet<Client>? Clients { get; set; }
         public DbSet<ClientsTooth>? ClientsTeeth { get; set; }
         public DbSet<DentalService>? DentalServices { get; set; }
         public DbSet<DentalServiceGroup>? DentalServiceGroups { get; set; }

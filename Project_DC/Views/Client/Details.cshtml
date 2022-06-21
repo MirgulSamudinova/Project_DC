@@ -34,7 +34,7 @@
         <div class="row">
             @{
                 await Html.RenderPartialAsync("~/Views/Partial/ClientsToothList.cshtml", Model.ClientsTeeth.FindAll(x=>x.ToothStateId != 1));
-                await Html.RenderPartialAsync("~/Views/Partial/ClientsServiceList.cshtml", Model.ClientsServices);
+                await Html.RenderPartialAsync("~/Views/Partial/ClientsServiceList.cshtml");
             }
         </div>
     </div>

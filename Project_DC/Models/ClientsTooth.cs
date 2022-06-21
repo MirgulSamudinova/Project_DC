@@ -8,8 +8,8 @@ namespace Project_DC.Models
 		public int Id { get; set; }
 
 		[JsonIgnore]
-		public Client? _Client { get; set; }
-		public int ClientId { get; set; }
+		public Patients? _Patients { get; set; }
+		public int PatientsId { get; set; }
 
 		public Tooth? _Tooth { get; set; }
 		public int ToothId { get; set; }
